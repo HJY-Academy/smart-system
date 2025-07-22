@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>하지영영어수학학원 스마트시스템</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .logo {
+            text-align: center;
+            color: #333;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        .login-box {
+            text-align: center;
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        .student-input {
+            width: 200px;
+            height: 50px;
+            font-size: 20px;
+            text-align: center;
+            border: 3px solid #667eea;
+            border-radius: 10px;
+            margin: 10px;
+        }
+        .login-btn {
+            background: #667eea;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .login-btn:hover {
+            background: #5a67d8;
+        }
+        .qr-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .qr-box {
+            width: 200px;
+            height: 200px;
+            border: 3px dashed #667eea;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            📚 하지영영어수학학원 📚<br>
+            <span style="font-size: 20px; color: #667eea;">Smart Learning System</span>
+        </div>
+
+        <div class="login-box">
+            <h2>🔍 QR코드를 스캔해주세요!</h2>
+            <div class="qr-box">
+                QR 스캐너 영역<br>
+                (추후 연동 예정)
+            </div>
+            
+            <hr style="margin: 30px 0;">
+            
+            <h3>📱 또는 학생번호를 입력하세요</h3>
+            <input type="text" id="studentId" class="student-input" placeholder="ST001" maxlength="5">
+            <br>
+            <button class="login-btn" onclick="login()">로그인</button>
+        </div>
+
+        <div id="welcomeScreen" style="display: none;">
+            <div style="text-align: center; background: #e8f5e8; padding: 30px; border-radius: 15px;">
+                <h2>✅ <span id="studentName"></span>님 안전하게 입실완료!</h2>
+                <p>시간: <span id="currentTime"></span></p>
+                
+                <div style="background: white; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <h3>📚 오늘의 학습 계획:</h3>
+                    <div id="studyPlan">
+                        <p>• <strong>영어:</strong> Grammar Gateway 1</p>
+                        <p>&nbsp;&nbsp;📖 p.16-18 (45분)</p>
+                        <p>&nbsp;&nbsp;🎯 Be동사 응용 연습</p>
+                        <br>
+                        <p>• <strong>수학:</strong> 개념원리 중2-1</p>
+                        <p>&nbsp;&nbsp;📖 p.22-25 (50분)</p>
+                        <p>&nbsp;&nbsp;🎯 유리수 계산</p>
+                    </div>
+                </div>
+                
+                <h3>💪 화이팅! 오늘도 최선을!</h3>
+                <button class="login-btn" onclick="startStudy()">학습 시작하기</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            const studentId = document.getElementById('studentId').value;
+            
+            if (!studentId) {
+                alert('학생번호를 입력해주세요!');
+                return;
+            }
+            
+            // 학생 정보 가져오기 (임시 데이터)
+            const students = {
+                'ST001': '김민준',
+                'ST002': '이서연', 
+                'ST003': '박지호',
+                'ST004': '정예진',
+                'ST005': '최하율'
+            };
+            
+            const studentName = students[studentId];
+            
+            if (!studentName) {
+                alert('등록되지 않은 학생번호입니다!');
+                return;
+            }
+            
+            // 현재 시간 표시
+            const now = new Date();
+            const timeString = now.getFullYear() + '-' + 
+                             (now.getMonth()+1).toString().padStart(2, '0') + '-' + 
+                             now.getDate().toString().padStart(2, '0') + ' ' +
+                             '오후 ' + (now.getHours()-12) + ':' + 
+                             now.getMinutes().toString().padStart(2, '0');
+            
+            document.getElementById('studentName').textContent = studentName;
+            document.getElementById('currentTime').textContent = timeString;
+            
+            // 화면 전환
+            document.querySelector('.login-box').style.display = 'none';
+            document.getElementById('welcomeScreen').style.display = 'block';
+            
+            // 여기서 실제로는 서버에 입실 기록 전송
+            console.log('입실 기록:', studentId, studentName, now);
+        }
+        
+        function startStudy() {
+            alert('학습 시스템으로 연결됩니다!\n(실제 구현 단계에서 구글시트와 연동)');
+        }
+    </script>
+</body>
+</html>
